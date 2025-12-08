@@ -1,0 +1,74 @@
+const express = require("express");
+const connection = require("./config/db");
+const userRoute = require("./routes/userRoute");
+const cors = require("cors");
+const addShowRoute = require("./routes/addShowRoute");
+const buyTicketRoute = require("./routes/buyTicketRoute");
+const seatLayoutRoutes = require("./routes/seatLayoutRoute");
+const seatBookingRoute = require("./routes/seatBookingRoute");
+const bookingRoute = require("./routes/bookingRoute");
+const checkoutRoute = require("./routes/checkoutRoute");
+const paynowRoute = require("./routes/paynowRoute");
+const homepageRouter = require("./routes/homepageRoute");
+const dashboardRoute = require("./routes/adminDashboardRoute");
+const favoriteRouter = require("./routes/favoriteRoute");
+const FeaturedSectionRoute = require("./routes/featuredSectionRoute");
+const adminSidebarRoute = require("./routes/adminSidebarRoute");
+const app = express();
+require("dotenv").config();
+
+app.use(
+  cors({
+    origin: [
+      "https://movie-client-render.onrender.com",
+      "http://localhost:5173",
+    ],
+    credentials: true,
+  })
+);
+
+//   cors({
+//     origin: [
+//       "https://movie-client-render.onrender.com",
+//       "http://localhost:5173",
+//     ],
+//     methods: "GET,POST,PUT,DELETE",
+//     credentials: true,
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
+
+// app.use(express.json());
+
+// app.use(
+//   cors({
+//     origin: "https://movie-project-backend-ufco.onrender.com",
+//     methods: "GET,POST,PUT,DELETE",
+//     credentials: true,
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
+app.use(express.json());
+
+app.use("/user", userRoute);
+app.use("/shows", addShowRoute);
+app.use("/buy-ticket", buyTicketRoute);
+app.use("/book-ticket", bookingRoute);
+app.use("/seat-layout", seatLayoutRoutes);
+app.use("/seat-booking", seatBookingRoute);
+app.use("/checkout", checkoutRoute);
+app.use("/payments", paynowRoute);
+app.use("/homepage", homepageRouter);
+app.use("/featuredSection", FeaturedSectionRoute);
+app.use("/adminSidebar", adminSidebarRoute);
+app.use("/adminDashboard", dashboardRoute);
+app.use("/favorite", favoriteRouter);
+
+app.listen(process.env.PORT, (error) => {
+  if (error) {
+    console.log("Server is not connected", error.message);
+    return;
+  }
+  connection();
+  console.log("server is connected", process.env.PORT);
+});

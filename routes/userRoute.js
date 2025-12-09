@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
 userRoute.post("/registration", async (req, res) => {
   const { userName, email, password } = req.body;
   if (!email || !password || !userName) {
-  return res.status(400).json({ message: "All fields required" });
-}
+    return res.status(400).json({ message: "All fields required" });
+  }
 
   try {
     let hashPassword = await bcrypt.hash(password, 10);
@@ -49,12 +49,11 @@ userRoute.post("/login", async (req, res) => {
 
     // Token generation
     // login
-   const myToken = jwt.sign(
-  { _id: user._id, userName: user.userName, email: user.email },
-  process.env.SECRET_KEY,
-  { expiresIn: "168h" }
-);
-
+    const myToken = jwt.sign(
+      { _id: user._id, userName: user.userName, email: user.email },
+      process.env.SECRET_KEY,
+      { expiresIn: "168h" }
+    );
 
     return res.status(201).json({
       message: "Login Successful",

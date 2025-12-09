@@ -16,7 +16,8 @@ paynowRoute.post("/process-payment", authenticate, async (req, res) => {
         message: "Booking not found",
       });
     }
-
+//gg 
+//cc
     // ✅ Demo payment successful - Directly update booking
     const updatedBooking = await CheckoutModel.findByIdAndUpdate(
       bookingId,
